@@ -18,121 +18,121 @@ function computeDeterminantTwoByTwo(matrix) {
 
 function getSubset(matrix, currentRowI, currentColI) {
   let subset = [];
-	
+
   for (let i in matrix) {
-		if(i != currentRowI){ 
-			let tempRow = [];
+    if (i != currentRowI) {
+      let tempRow = [];
 
-			for (let j in matrix[i]) {
-				if (j != currentColI) tempRow.push(matrix[i][j]);
-			}
+      for (let j in matrix[i]) {
+        if (j != currentColI) tempRow.push(matrix[i][j]);
+      }
 
-			subset.push(tempRow);
-		}
+      subset.push(tempRow);
+    }
   }
 
   return subset;
 }
 
-function searchZeros(matrix){
-	let data = {count: 0, isRow: true, i: 0};
-	const err = 'The matrix is not N by N'; 
+function searchZeros(matrix) {
+  let data = { count: 0, isRow: true, i: 0 };
+  const err = 'The matrix is not N by N';
 
-	function setCount(count, i, isRow){
-		if(count === matrix.length){
-			console.error(err);
-			return null;
-		} 
-		return {count, isRow, i};
-	}
+  function setCount(count, i, isRow) {
+    if (count === matrix.length) {
+      console.error(err);
+      return null;
+    }
+    return { count, isRow, i };
+  }
 
-	for(let i in matrix){
-		let numZeros = matrix[i].reduce((count, num) => num === 0 ? count + 1 : count, 0);
+  for (let i in matrix) {
+    let numZeros = matrix[i].reduce((count, num) => num === 0 ? count + 1 : count, 0);
 
-		if(numZeros > data.count) data = setCount(numZeros, i, true);
-		if(!data || data.count === matrix.length - 1) return data;
-	}
+    if (numZeros > data.count) data = setCount(numZeros, i, true);
+    if (!data || data.count === matrix.length - 1) return data;
+  }
 
-	for(let i in matrix){
-		let numZeros = 0;
+  for (let i in matrix) {
+    let numZeros = 0;
 
-		for(let j in matrix){
-			numZeros += matrix[j][i] === 0 ? 1 : 0;
-		}
+    for (let j in matrix) {
+      numZeros += matrix[j][i] === 0 ? 1 : 0;
+    }
 
-		if(numZeros > data.count) data = setCount(numZeros, i, false);
-		if(!data || data.count === matrix.length - 1) return data;
-	}
-	return data;
+    if (numZeros > data.count) data = setCount(numZeros, i, false);
+    if (!data || data.count === matrix.length - 1) return data;
+  }
+  return data;
 }
 
-function computeDeterminantNByN(matrix, constant = 1){
-	if(constant === 0) return 0;
-	
-	let result = 0;
-		
-	if(matrix.length == 2){ 
-		result = computeDeterminantTwoByTwo(matrix);
+function computeDeterminantNByN(matrix, constant = 1) {
+  if (constant === 0) return 0;
 
-		console.log(result, ' * ', constant, ' = ', result * constant);
-		return result * constant;
-	}
-	const findZeros = searchZeros(matrix);
+  let result = 0;
 
-	if(!findZeros) return 0;
+  if (matrix.length == 2) {
+    result = computeDeterminantTwoByTwo(matrix);
 
-	const { isRow } = findZeros;
-	let sign = findZeros.i % 2 == 0 ? 1 : -1;
+    console.log(result, ' * ', constant, ' = ', result * constant);
+    return result * constant;
+  }
+  const findZeros = searchZeros(matrix);
 
-	for(let i in matrix){
-		let 
-			colI = isRow ? i : findZeros.i,
-			rowI = isRow ? findZeros.i : i;
+  if (!findZeros) return 0;
 
-		console.log({rowI, colI, isRow});
+  const { isRow } = findZeros;
+  let sign = findZeros.i % 2 == 0 ? 1 : -1;
 
-		let subset = getSubset(matrix, rowI, colI);
+  for (let i in matrix) {
+    let
+      colI = isRow ? i : findZeros.i,
+      rowI = isRow ? findZeros.i : i;
 
-		console.log(subset, matrix[rowI][colI] + ' * ' + constant, sign == 1 ? '+':'-');
+    console.log({ rowI, colI, isRow });
 
-		result += computeDeterminantNByN(subset,constant * matrix[rowI][colI] * sign);
-		sign *= -1;
-	}
-	console.log(result);
-	return result;
+    let subset = getSubset(matrix, rowI, colI);
+
+    console.log(subset, matrix[rowI][colI] + ' * ' + constant, sign == 1 ? '+' : '-');
+
+    result += computeDeterminantNByN(subset, constant * matrix[rowI][colI] * sign);
+    sign *= -1;
+  }
+  console.log(result);
+  return result;
 }
 
 const stMatrix = [
   [2, 1, 0, -1],
   [0, -1, 0, 3],
-  [-2, 1, 1, -2],	
+  [-2, 1, 1, -2],
   [3, 2, 0, 1]
 ];
 
 const sndMatrix = [
-	[1,2,3],
-	[4,5,6],
-	[7,8,9],
+  [1, 2, 3],
+  [4, 5, 6],
+  [7, 8, 9],
 ];
 
 const trdMatrix = [
-	[0,3,4,3],
-	[-3,-2,1,0],
-	[4,1,0,1],
-	[-1,2,1,0],
+  [0, 3, 4, 3],
+  [-3, -2, 1, 0],
+  [4, 1, 0, 1],
+  [-1, 2, 1, 0],
 ]
 
 const frMatrix = [
-	[1,0],
-	[0,1],
+  [1, 0],
+  [0, 1],
 ]
 
 const fifMatrix = [
-	[2,3,1,-4,2],
-	[2,3,0,2,-3],
-	[-1,5,1,2,-2],
-	[4,1,2,0,-3],
-	[-4,0,-2,1,2],
+  [2, 3, 1, -4, 2],
+  [2, 3, 0, 2, -3],
+  [-1, 5, 1, 2, -2],
+  [4, 1, 2, 0, -3],
+  [-4, 0, -2, 1, 2],
 ]
 
 const result = computeDeterminantNByN(fifMatrix);
