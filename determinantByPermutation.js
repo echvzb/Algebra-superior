@@ -7,10 +7,8 @@ function getSubset(matrix, currentColI) {
         for (let j in matrix[i]) {
             if (j != currentColI) tempRow.push(matrix[i][j]);
         }
-
         subset.push(tempRow);
     }
-
     return subset;
 }
 
