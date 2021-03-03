@@ -102,33 +102,7 @@ function computeDeterminantNByN(matrix, constant = 1) {
   console.log(result);
   return result;
 }
-
-const stMatrix = [
-  [2, 1, 0, -1],
-  [0, -1, 0, 3],
-  [-2, 1, 1, -2],
-  [3, 2, 0, 1]
-];
-
-const sndMatrix = [
-  [1, 2, 3],
-  [4, 5, 6],
-  [7, 8, 9],
-];
-
-const trdMatrix = [
-  [0, 3, 4, 3],
-  [-3, -2, 1, 0],
-  [4, 1, 0, 1],
-  [-1, 2, 1, 0],
-]
-
-const frMatrix = [
-  [1, 0],
-  [0, 1],
-]
-
-const fifMatrix = [
+const det = [
   [2, 3, 1, -4, 2],
   [2, 3, 0, 2, -3],
   [-1, 5, 1, 2, -2],
@@ -136,4 +110,4 @@ const fifMatrix = [
   [-4, 0, -2, 1, 2],
 ]
 
-const result = computeDeterminantNByN(fifMatrix);
+const result = computeDeterminantNByN(det);
